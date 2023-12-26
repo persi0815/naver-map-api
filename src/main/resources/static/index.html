@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>간단한 지도 표시하기</title>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=qtlfb7ux41"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!--jQuery 구문 사용-->
+</head>
+<body>
+<div id="map" style="width: 100%; height: 600px; position: relative; overflow: hidden; background: rgb(248, 249, 250);" tabindex="0"></div>
+<div class="buttons">
+    <input id="NORMAL" type="button" value="일반지도" class="control-btn control-on">
+    <input id="TERRAIN" type="button" value="지형도" class="control-btn">
+    <input id="SATELLITE" type="button" value="위성지도" class="control-btn">
+    <input id="HYBRID" type="button" value="겹쳐보기" class="control-btn">
+</div>
+<script>
+    var map = new naver.maps.Map('map', {
+        center: new naver.maps.LatLng(37.3595704, 127.105399),  <!--위도경도 기준으로 center 설정, zoom 설정-->
+        zoom: 15
+    });
+
+    var btns = $(".buttons > input"); <!--jQuery 구문 사용-->
+    btns.on("click", function(e) { <!--버튼 눌렸을 때 각 버튼의 id 변경-->
+        e.preventDefault();
+
+        var mapTypeId = this.id;
+
+        if (map.getMapTypeId() !== naver.maps.MapTypeId[mapTypeId]) {
+            map.setMapTypeId(naver.maps.MapTypeId[mapTypeId]); // 지도 유형 변경하기
+
+            btns.removeClass("control-on");
+            $(this).addClass("control-on");
+        }
+    });
+</script>
+</body>
